@@ -1,0 +1,19 @@
+.login{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & > *{
+    margin: 0.5rem !important;
+  }
+
+  .checkbox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .MuiTypography-root{
+    color: rgba(0, 0, 0, 0.54);
+  }
+}

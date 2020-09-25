@@ -1,0 +1,13 @@
+.modal-body{
+  height: 100%;
+
+  header .MuiTabs-flexContainer > button{
+    display: flex;
+    flex-grow: 1;
+  }
+
+  .tabpanel{
+    color: black;
+    height: 100%;
+  }
+}

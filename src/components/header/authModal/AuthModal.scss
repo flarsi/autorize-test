@@ -1,0 +1,16 @@
+.modal-window{
+  position: absolute;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  max-height: 25rem;
+}
+
+div[role="presentation"]{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

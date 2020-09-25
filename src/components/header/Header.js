@@ -1,12 +1,13 @@
-import React from "react"
+import React, {useContext} from "react"
 import "./Header.scss"
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import {AuthModal} from "./authModal/AuthModal";
+import {UserContext} from "../../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 export const Header = () => {
     const classes = useStyles();
 
+    const user = useContext(UserContext)
+    console.log(user)
+
     return(
         <div className="header">
             <div className={classes.root}>
@@ -34,7 +38,7 @@ export const Header = () => {
                         <Typography variant="h6" className={classes.title}>
                             News
                         </Typography>
-                        <Button className="login" color="inherit">Login</Button>
+                        <AuthModal/>
                     </Toolbar>
                 </AppBar>
             </div>

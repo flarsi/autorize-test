@@ -1,31 +1,33 @@
-import React, {useState} from 'react';
-import './App.css';
+import React from 'react';
 import {Header} from "./components/header/Header";
 import {Content} from "./components/content/Content";
 import axios from "axios";
+import {UserProvider} from "./context/UserContext";
 
 function App() {
 
-    const [user, serUser] = useState();
+    axios({
+            method:"post",
+            url: 'http://localhost:3001/api/v1/auth/user',
+            headers: {
+                Authorization: "Bearer"
+            },
+            data: {
+                token: localStorage.getItem("token")
+            }
+        }).then((res) => {
+            console.log(res)
+    })
 
-    // axios.get('http://localhost:3001/api/v1/users')
-    //     .then((res) => {
-    //         console.log(res)
-    //     })
-
-    axios.post('http://localhost:3001/api/v1/users',
-        {
-            email: "test@gmail.com",
-            password: "passwd",
-            name: "test"
-        })
-
+console.log(localStorage.getItem("token"))
 
   return (
-    <div className="App">
-        <Header/>
-        <Content/>
-    </div>
+        <div className="App">
+            <UserProvider>
+                <Header/>
+                <Content/>
+            </UserProvider>
+        </div>
   );
 }
 
