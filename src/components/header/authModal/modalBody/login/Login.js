@@ -1,14 +1,15 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import "./Login.scss"
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
+import {UserContext} from "../../../../../context/UserContext";
+import {isResponseOk} from "../../../../../middlewares";
 
-export const Login = ({setUser}) => {
-
-    const [userData, setUserData] = useState({email: '', password: '', stayInSystem: false});
+export const Login = ({handleModalClose}) => {
+    const user = useContext(UserContext)
 
     const authUser = () => {
         axios({
@@ -16,23 +17,22 @@ export const Login = ({setUser}) => {
             url: 'http://localhost:3001/api/v1/auth',
 
             data: {
-                email: userData.email,
-                password: userData.password
+                email: user.data.email,
+                password: user.data.password
             }
         }).then(res => {
-            if(res.status === 200){
-                setUser({token: res.data.token})
-                if(userData.stayInSystem){
+            isResponseOk(res.status, () => {
+                user.setUserData({token: res.data.token})
+                if(user.data.stayInSystem){
                     localStorage.setItem('token', res.data.token)
+                    handleModalClose()
                 }
-            }else{
-                console.log(res)
-            }
+            })
         })
     }
 
     const userDataHandler = (event) => {
-        setUserData({...userData, [event.target.name]: event.target.value})
+        user.setUserData({...user.data, [event.target.name]: event.target.value})
     }
 
     return(
@@ -48,10 +48,10 @@ export const Login = ({setUser}) => {
             />
             <div className="checkbox">
                 <Checkbox
-                    defaultChecked
                     color="primary"
                     inputProps={{ 'aria-label': 'secondary checkbox' }}
-                    onChange={() => setUserData({...userData, stayInSystem: !userData.stayInSystem})}
+                    checked={user.stayInSystem}
+                    onChange={user.changeStayInSystem}
                 />
                 <Typography variant="h6">stay in system</Typography>
             </div>

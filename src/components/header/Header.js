@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {AuthModal} from "./authModal/AuthModal";
 import {UserContext} from "../../context/UserContext";
+import {UserMenu} from "./userMenu/UserMenu";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,9 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Header = () => {
     const classes = useStyles();
-
     const user = useContext(UserContext)
-    console.log(user)
 
     return(
         <div className="header">
@@ -38,7 +37,11 @@ export const Header = () => {
                         <Typography variant="h6" className={classes.title}>
                             News
                         </Typography>
-                        <AuthModal/>
+                        {user.data.isAuth ?
+                            <UserMenu/>
+                            :
+                            <AuthModal/>
+                        }
                     </Toolbar>
                 </AppBar>
             </div>

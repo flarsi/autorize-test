@@ -1,10 +1,13 @@
 import React from "react";
+import {Pages} from "./pages/Pages";
+import {Alert} from "./alert/Alert";
 
 export const Content = () => {
 
     return(
         <div className="content">
-            <h1>CONTENT</h1>
+            <Alert/>
+            <Pages/>
         </div>
     )
 }

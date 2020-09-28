@@ -27,7 +27,7 @@ const TabPanel = ({ children, value, index }) => {
 }
 
 
-export const ModalBody = ({setUser}) => {
+export const ModalBody = ({handleClose}) => {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -43,10 +43,10 @@ export const ModalBody = ({setUser}) => {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <Login setUser={setUser}/>
+                <Login handleModalClose={handleClose}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Register setUser={setUser}/>
+                <Register handleModalClose={handleClose}/>
             </TabPanel>
         </div>
     );

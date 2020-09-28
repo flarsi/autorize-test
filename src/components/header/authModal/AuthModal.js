@@ -19,7 +19,7 @@ export const AuthModal = () => {
 
     return (
         <div>
-            <Button className="login" color="inherit" onClick={handleOpen}>Login</Button>
+            <Button className="login" color="inherit" onClick={handleOpen}>Log in</Button>
 
             <Modal
                 open={open}
@@ -28,7 +28,7 @@ export const AuthModal = () => {
                 aria-describedby="simple-modal-description"
             >
                 <div className="modal-window">
-                    <ModalBody/>
+                    <ModalBody handleClose={handleClose}/>
                 </div>
             </Modal>
         </div>

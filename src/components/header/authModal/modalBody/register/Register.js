@@ -1,32 +1,33 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import "./Register.scss"
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
+import {UserContext} from "../../../../../context/UserContext";
+import {isResponseOk} from "../../../../../middlewares";
 
-export const Register = ({setUser}) => {
+export const Register = ({handleModalClose}) => {
 
-    const [userData, setUserData] = useState({email: '', password: '', name: '', stayInSystem: false});
+    const user = useContext(UserContext)
 
     const authUser = () => {
         axios({
             method:"post",
             url: 'http://localhost:3001/api/v1/auth',
             data: {
-                email: userData.email,
-                password: userData.password
+                email: user.data.email,
+                password: user.data.password
             }
         }).then(res => {
-            if(res.status === 200){
-                setUser({token: res.data.token})
-                if(userData.stayInSystem){
+            isResponseOk(res.status, () => {
+                user.setUserData({token: res.data.token})
+                if(user.data.stayInSystem){
                     localStorage.setItem('token', res.data.token)
+                    handleModalClose()
                 }
-            }else{
-                console.log(res)
-            }
+            })
         })
     }
 
@@ -35,22 +36,19 @@ export const Register = ({setUser}) => {
             method:"post",
             url: 'http://localhost:3001/api/v1/users',
             data: {
-                name: userData.name,
-                email: userData.email,
-                password: userData.password
+                name: user.data.name,
+                email: user.data.email,
+                password: user.data.password
             }
         }).then(res => {
-            if(res.status === 200){
-                localStorage.clear()
+            isResponseOk(res.status, () => {
                 authUser()
-            }else{
-                console.log(res)
-            }
+            })
         })
     }
 
     const userDataHandler = (event) => {
-        setUserData({...userData, [event.target.name]: event.target.value})
+        user.setUserData({...user.data, [event.target.name]: event.target.value})
     }
 
     return(
@@ -70,6 +68,7 @@ export const Register = ({setUser}) => {
                     defaultChecked
                     color="primary"
                     inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    onChange={user.changeStayInSystem}
                 />
                 <Typography variant="h6">stay in system</Typography>
             </div>
