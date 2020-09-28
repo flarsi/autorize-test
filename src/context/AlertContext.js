@@ -32,8 +32,8 @@ export const AlertProvider = ({children}) => {
 
     const timeOutShow = (time = 5000, text) => {
         showAlert(text)
-        setTimeout(async () => {
-            await closeAlert()
+        setTimeout( () => {
+             closeAlert()
         }, time)
     }
 
