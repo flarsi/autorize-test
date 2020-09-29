@@ -10,7 +10,8 @@ import {bearerAuth} from "./helpers/querys";
 function App() {
     const user = useContext(UserContext)
 
-    bearerAuth().then((res) => {
+    if(localStorage.getItem("token") && !user.data.name)
+        bearerAuth().then((res) => {
             isResponseOk(res.status, () => {
                 if(!user.data.isAuth){
                     user.isAuth()

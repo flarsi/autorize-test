@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import {UserContext} from "../../../../../context/UserContext";
 import {isResponseOk} from "../../../../../helpers/middlewares";
 import {AlertContext} from "../../../../../context/AlertContext";
-import {mailAuth} from "../../../../../helpers/querys";
+import {bearerAuth, mailAuth} from "../../../../../helpers/querys";
 
 export const Login = ({handleModalClose}) => {
     const alert = useContext(AlertContext)
@@ -20,10 +20,24 @@ export const Login = ({handleModalClose}) => {
                 user.setUserData({token: res.data.token})
                 user.isAuth()
                 alert.timeOutShow(2000, "Log in success")
+                bearerAuth(res.data.token).then((res) => {
+                    isResponseOk(res.status, () => {
+                        if(!user.data.isAuth){
+                            user.isAuth()
+                            user.setUserData({
+                                email: res.data.email,
+                                name: res.data.name,
+                                id: res.data._id
+                            })
+
+                        }
+                    })
+                })
                 if(user.data.stayInSystem){
                     localStorage.setItem('token', res.data.token)
                     handleModalClose()
                 }
+
             })
         })
     }

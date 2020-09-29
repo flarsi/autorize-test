@@ -1,15 +1,14 @@
 import axios from "axios";
 
-export const bearerAuth = () => {
-    if(localStorage.getItem("token"))
-        return axios({
-            method:"get",
-            url: 'http://localhost:3001/api/v1/auth/user',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+export const bearerAuth = (token = localStorage.getItem("token")) => {
+    return axios({
+        method:"get",
+        url: 'http://localhost:3001/api/v1/auth/user',
+        headers: {
+            Authorization: `Bearer ${token}`,
 
-            },
-        })
+        },
+    })
 }
 
 export const mailAuth = (user) => axios({

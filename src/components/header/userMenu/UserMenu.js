@@ -24,6 +24,14 @@ export const UserMenu = () => {
         setAnchorEl("");
     };
 
+    const logOut = () => {
+        handleClose();
+        user.logOut();
+        localStorage.clear()
+        alert.timeOutShow(5000, "log out");
+        window.location.href = "/";
+    }
+
 
     return (
         <div className="user-menu">
@@ -43,7 +51,7 @@ export const UserMenu = () => {
             >
                 <MenuItem onClick={handleClose}><Link to={"/profile"}>Profile</Link></MenuItem>
                 <MenuItem onClick={handleClose}>My posts</MenuItem>
-                <MenuItem onClick={() => {handleClose(); user.logOut(); alert.timeOutShow(5000, "log out")}}>Logout</MenuItem>
+                <MenuItem onClick={logOut}>Logout</MenuItem>
             </Menu>
         </div>
     );

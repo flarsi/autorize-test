@@ -43,9 +43,6 @@ export const NameInput = () => {
         setDialog({...dialog, open: true});
     };
 
-    // console.log(dialog.answer)
-    // console.log(user.data)
-
     return (
         <div className={"name-input"}>
             <Input onChange={changeName} value={name.text} disabled={!name.correct} inputProps={{ 'aria-label': 'description' }} />

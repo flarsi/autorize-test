@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import {UserContext} from "../../../../../context/UserContext";
 import {isResponseOk} from "../../../../../helpers/middlewares";
 import {AlertContext} from "../../../../../context/AlertContext";
-import {mailAuth, registerQuery} from "../../../../../helpers/querys";
+import {bearerAuth, mailAuth, registerQuery} from "../../../../../helpers/querys";
 
 export const Register = ({handleModalClose}) => {
 
@@ -19,6 +19,19 @@ export const Register = ({handleModalClose}) => {
             isResponseOk(res.status, () => {
                 user.setUserData({token: res.data.token})
                 user.isAuth()
+                bearerAuth().then((res) => {
+                    isResponseOk(res.status, () => {
+                        if(!user.data.isAuth){
+                            user.isAuth()
+                            user.setUserData({
+                                email: res.data.email,
+                                name: res.data.name,
+                                id: res.data._id
+                            })
+
+                        }
+                    })
+                })
                 if(user.data.stayInSystem){
                     localStorage.setItem('token', res.data.token)
                     handleModalClose()
