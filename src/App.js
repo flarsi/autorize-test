@@ -1,25 +1,16 @@
 import React, {useContext} from 'react';
 import {Header} from "./components/header/Header";
 import {Content} from "./components/content/Content";
-import axios from "axios";
 import {UserContext} from "./context/UserContext";
-import {isResponseOk} from "./middlewares";
+import {isResponseOk} from "./helpers/middlewares";
 import {BrowserRouter} from "react-router-dom";
-
+import "./App.css"
+import {bearerAuth} from "./helpers/querys";
 
 function App() {
     const user = useContext(UserContext)
 
-    const token = localStorage.getItem("token")
-    if(localStorage.getItem("token"))
-        axios({
-            method:"get",
-            url: 'http://localhost:3001/api/v1/auth/user',
-            headers: {
-                Authorization: `Bearer ${token}`,
-
-            },
-        }).then((res) => {
+    bearerAuth().then((res) => {
             isResponseOk(res.status, () => {
                 if(!user.data.isAuth){
                     user.isAuth()
@@ -33,7 +24,6 @@ function App() {
             })
         })
 
-    console.log(user.data)
   return (
         <div className="App">
             <BrowserRouter>

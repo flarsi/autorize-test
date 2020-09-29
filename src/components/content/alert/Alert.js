@@ -18,14 +18,15 @@ export const ActionAlert = () => {
                         aria-label="close"
                         color="inherit"
                         size="small"
-                        onClick={alert.timeOutShow}
+                        onClick={alert.closeAlert}
                     >
                         <CloseIcon fontSize="inherit" />
                     </IconButton>
                 }
             >
-                Close me!
+                {alert.data.text}
             </Alert>
         </Collapse>
+            // {/*<button onClick={alert.timeOutShow}>showAlert</button>*/}
     )
 }

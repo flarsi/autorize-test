@@ -3,6 +3,10 @@ import React, {createContext, useReducer} from "react";
 export const UserContext = createContext()
 
 export const UserProvider = ({children}) => {
+    const initialState = {
+        stayInSystem : false,
+        isAuth: false
+    }
 
     const reducer = (state, action) => {
         switch (action.type) {
@@ -12,14 +16,11 @@ export const UserProvider = ({children}) => {
                 return {...state, stayInSystem: !state.stayInSystem};
             case 'isAuth':
                 return {...state, isAuth: !state.isAuth};
+            case 'logOut':
+                return initialState;
             default:
                 throw new Error();
         }
-    }
-
-    const initialState = {
-        stayInSystem : false,
-        isAuth: false
     }
 
     const [data, dispatch] = useReducer(reducer, initialState);
@@ -35,10 +36,16 @@ export const UserProvider = ({children}) => {
         dispatch({type: 'isAuth'})
     }
 
+    const logOut = () => {
+        dispatch({type: 'logOut'})
+        localStorage.clear()
+    }
+
     const reduceMethods = {
         setUserData,
         changeStayInSystem,
         isAuth,
+        logOut
     }
 
     return(

@@ -1,12 +1,18 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import "./UserMenu.scss"
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import {AccountCircle} from "@material-ui/icons";
 import {Link} from "react-router-dom";
+import {UserContext} from "../../../context/UserContext";
+import {AlertContext} from "../../../context/AlertContext";
 
 export const UserMenu = () => {
+
+    const user = useContext(UserContext)
+    const alert = useContext(AlertContext)
+
     const [anchorEl, setAnchorEl] = useState("");
     const open = Boolean(anchorEl);
 
@@ -17,6 +23,7 @@ export const UserMenu = () => {
     const handleClose = () => {
         setAnchorEl("");
     };
+
 
     return (
         <div className="user-menu">
@@ -35,8 +42,8 @@ export const UserMenu = () => {
                 onClose={handleClose}
             >
                 <MenuItem onClick={handleClose}><Link to={"/profile"}>Profile</Link></MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleClose}>My posts</MenuItem>
+                <MenuItem onClick={() => {handleClose(); user.logOut(); alert.timeOutShow(5000, "log out")}}>Logout</MenuItem>
             </Menu>
         </div>
     );

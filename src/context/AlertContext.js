@@ -16,7 +16,7 @@ export const AlertProvider = ({children}) => {
     }
 
     const initialState = {
-        show : true,
+        show : false,
 
     }
 
@@ -30,12 +30,13 @@ export const AlertProvider = ({children}) => {
         dispatch({type: 'closeAlert'})
     }
 
-    const timeOutShow = (time = 5000, text) => {
+    const timeOutShow =   (time = 5000, text) => {
         showAlert(text)
-        setTimeout( () => {
-             closeAlert()
+        setTimeout(async () => {
+             await dispatch({type: 'closeAlert'})
         }, time)
     }
+
 
     const reduceMethods = {
         showAlert,

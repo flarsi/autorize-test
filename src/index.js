@@ -1,15 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {UserProvider} from "./context/UserContext";
-import {AlertProvider} from "./context/AlertContext";
+import {IndexProvider} from "./context/IndexProvider";
 
 ReactDOM.render(
-    <AlertProvider>
-      <UserProvider>
+    <IndexProvider>
         <App/>
-      </UserProvider>
-    </AlertProvider>
+    </IndexProvider>
   ,
   document.getElementById('root')
 );

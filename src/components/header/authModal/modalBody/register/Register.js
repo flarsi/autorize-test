@@ -4,25 +4,21 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
 import {UserContext} from "../../../../../context/UserContext";
-import {isResponseOk} from "../../../../../middlewares";
+import {isResponseOk} from "../../../../../helpers/middlewares";
+import {AlertContext} from "../../../../../context/AlertContext";
+import {mailAuth, registerQuery} from "../../../../../helpers/querys";
 
 export const Register = ({handleModalClose}) => {
 
     const user = useContext(UserContext)
+    const alert = useContext(AlertContext)
 
     const authUser = () => {
-        axios({
-            method:"post",
-            url: 'http://localhost:3001/api/v1/auth',
-            data: {
-                email: user.data.email,
-                password: user.data.password
-            }
-        }).then(res => {
+        mailAuth(user).then(res => {
             isResponseOk(res.status, () => {
                 user.setUserData({token: res.data.token})
+                user.isAuth()
                 if(user.data.stayInSystem){
                     localStorage.setItem('token', res.data.token)
                     handleModalClose()
@@ -32,16 +28,9 @@ export const Register = ({handleModalClose}) => {
     }
 
     const registerUser = () => {
-        axios({
-            method:"post",
-            url: 'http://localhost:3001/api/v1/users',
-            data: {
-                name: user.data.name,
-                email: user.data.email,
-                password: user.data.password
-            }
-        }).then(res => {
+        registerQuery(user).then(res => {
             isResponseOk(res.status, () => {
+                alert.timeOutShow(2000, "Register success")
                 authUser()
             })
         })
@@ -65,9 +54,9 @@ export const Register = ({handleModalClose}) => {
             />
             <div className="checkbox">
                 <Checkbox
-                    defaultChecked
                     color="primary"
                     inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    checked={user.stayInSystem}
                     onChange={user.changeStayInSystem}
                 />
                 <Typography variant="h6">stay in system</Typography>
