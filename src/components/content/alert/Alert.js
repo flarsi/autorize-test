@@ -4,6 +4,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Collapse from "@material-ui/core/Collapse";
 import {AlertContext} from "../../../context/AlertContext";
 import Alert from "@material-ui/lab/Alert";
+import "./Alert.scss"
 
 export const ActionAlert = () => {
 
@@ -11,8 +12,8 @@ export const ActionAlert = () => {
 
 
     return(
-        <Collapse in={alert.data.show}>
-            <Alert
+        <Collapse in={alert.data.show} className="alert-container">
+            <Alert className={"alert"}
                 action={
                     <IconButton
                         aria-label="close"
@@ -27,6 +28,5 @@ export const ActionAlert = () => {
                 {alert.data.text}
             </Alert>
         </Collapse>
-            // {/*<button onClick={alert.timeOutShow}>showAlert</button>*/}
     )
 }

@@ -1,0 +1,10 @@
+.alert-container{
+  //display: flex;
+  //justify-content: space-between;
+
+  .alert{
+    position: absolute;
+    width: calc(100% - 3rem);
+  }
+}
+

@@ -18,9 +18,9 @@ function App() {
                     user.setUserData({
                         email: res.data.email,
                         name: res.data.name,
-                        id: res.data._id
+                        id: res.data._id,
+                        avatar: res.data.avatar
                     })
-
                 }
             })
         })

@@ -50,7 +50,7 @@ export const UserMenu = () => {
                 onClose={handleClose}
             >
                 <MenuItem onClick={handleClose}><Link to={"/profile"}>Profile</Link></MenuItem>
-                <MenuItem onClick={handleClose}>My posts</MenuItem>
+                <MenuItem onClick={handleClose}><Link to={"/posts"}>My posts</Link></MenuItem>
                 <MenuItem onClick={logOut}>Logout</MenuItem>
             </Menu>
         </div>

@@ -8,14 +8,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from "axios";
 import {isResponseOk} from "../../../helpers/middlewares";
 import {UserContext} from "../../../context/UserContext";
-import {bearerAuth, mailAuth} from "../../../helpers/querys";
+import {bearerAuth} from "../../../helpers/querys";
 
 export default function ConfirmModal({dialog, setDialog, name}) {
     const user = useContext(UserContext)
 
     const handleClose = (answer) => {
         setDialog({...dialog, open: false});
-        console.log(name)
 
         if(answer){
             axios({
@@ -30,30 +29,18 @@ export default function ConfirmModal({dialog, setDialog, name}) {
                 }
             }).then((res) => {
                 isResponseOk(res.status, () => {
-                    user.setUserData({name: res.data.name})
-                    // mailAuth(user).then(res => {
-                    //     isResponseOk(res.status, () => {
-                    //         user.setUserData({token: res.data.token})
-                    //         user.isAuth()
-                    //         bearerAuth(res.data.token).then((res) => {
-                    //             isResponseOk(res.status, () => {
-                    //                 if(!user.data.isAuth){
-                    //                     user.isAuth()
-                    //                     user.setUserData({
-                    //                         email: res.data.email,
-                    //                         name: res.data.name,
-                    //                         id: res.data._id
-                    //                     })
-                    //
-                    //                 }
-                    //             })
-                    //         })
-                    //         if(user.data.stayInSystem){
-                    //             localStorage.setItem('token', res.data.token)
-                    //         }
-                    //
-                    //     })
-                    // })
+                        bearerAuth(res.data.token).then((res) => {
+                            isResponseOk(res.status, () => {
+                                user.setUserData({
+                                    email: res.data.email,
+                                    name: res.data.name,
+                                    id: res.data._id
+                                })
+                            })
+                        })
+                    if(user.data.stayInSystem){
+                        localStorage.setItem('token', res.data.token)
+                    }
                 })
             })
         }

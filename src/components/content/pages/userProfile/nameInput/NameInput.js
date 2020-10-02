@@ -33,7 +33,7 @@ export const NameInput = () => {
 
     const cancel = (event) => {
         event.target.innerHTML = user.data.name
-        setName({...name, text: user.data.name})
+        setName({...name, text: user.data.name, correct: !name.correct})
     }
 
 
@@ -55,7 +55,7 @@ export const NameInput = () => {
                         </IconButton>
                     </ThemeProvider>
 
-                    <IconButton onClick={(event) => {handleCorrect(); cancel(event);}} color="secondary" aria-label="upload picture" component="span">
+                    <IconButton onClick={(event) => {cancel(event)}} color="secondary" aria-label="upload picture" component="span">
                         <ClearIcon/>
                     </IconButton>
                 </div>
