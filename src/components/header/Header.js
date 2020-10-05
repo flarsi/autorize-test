@@ -9,6 +9,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {AuthModal} from "./authModal/AuthModal";
 import {UserContext} from "../../context/UserContext";
 import {UserMenu} from "./userMenu/UserMenu";
+import {NavDrawer} from "./drawer/Drawer";
+import { useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,17 +27,30 @@ const useStyles = makeStyles((theme) => ({
 export const Header = () => {
     const classes = useStyles();
     const user = useContext(UserContext)
+    const location = useLocation().pathname.replace('/', '').toUpperCase();
+
+    console.log();
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
     return(
         <div className="header">
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <IconButton onClick={handleDrawerOpen} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" className={classes.title}>
-                            News
+                            {location === '' ? "Home" : location}
                         </Typography>
                         {user.data.isAuth ?
                             <UserMenu/>
@@ -44,8 +59,8 @@ export const Header = () => {
                         }
                     </Toolbar>
                 </AppBar>
+                <NavDrawer open={open} handleDrawerClose={handleDrawerClose}/>
             </div>
         </div>
     )
 }
-
