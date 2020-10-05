@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from "axios";
 import {isResponseOk} from "../../../helpers/middlewares";
-import {UserContext} from "../../../context/UserContext";
+import {UserContext} from "../../../context/userContext/UserContext";
 import {bearerAuth} from "../../../helpers/querys";
 
 export default function ConfirmModal({dialog, setDialog, name}) {

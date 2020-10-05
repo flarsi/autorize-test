@@ -1,7 +1,7 @@
 import React from "react";
-import {UserProvider} from "./UserContext";
-import {AlertProvider} from "./AlertContext";
-import {PostsProvider} from "./PostsContext";
+import {UserProvider} from "./userContext/UserContext";
+import {AlertProvider} from "./alertContext/AlertContext";
+import {PostsProvider} from "./postsContext/PostsContext";
 
 export const IndexProvider = ({children}) => (
     <AlertProvider>

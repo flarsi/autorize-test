@@ -8,7 +8,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import green from "@material-ui/core/colors/green";
 import { ThemeProvider } from '@material-ui/core/styles';
-import {UserContext} from "../../../../../context/UserContext";
+import {UserContext} from "../../../../../context/userContext/UserContext";
 import ConfirmModal from "../../../../header/confirmModal/ConfirmModal";
 
 export const NameInput = () => {

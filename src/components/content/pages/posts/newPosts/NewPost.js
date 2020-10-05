@@ -4,9 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import {TextArea} from "semantic-ui-react";
 import Button from "@material-ui/core/Button";
 import {createNewPostQuery} from "../../../../../helpers/querys";
-import {AlertContext} from "../../../../../context/AlertContext";
+import {AlertContext} from "../../../../../context/alertContext/AlertContext";
 import {isResponseOk} from "../../../../../helpers/middlewares";
-import {PostsContext} from "../../../../../context/PostsContext";
+import {PostsContext} from "../../../../../context/postsContext/PostsContext";
 import Grid from "@material-ui/core/Grid";
 
 export const NewPost = () => {

@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Collapse from "@material-ui/core/Collapse";
-import {AlertContext} from "../../../context/AlertContext";
+import {AlertContext} from "../../../context/alertContext/AlertContext";
 import Alert from "@material-ui/lab/Alert";
 import "./Alert.scss"
 

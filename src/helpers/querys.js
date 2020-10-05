@@ -67,3 +67,21 @@ export const patchPostFromId = (id, data, token = localStorage.getItem("token"))
         data: data
     })
 }
+
+export const updateUserAvatar = (id, data, token = localStorage.getItem("token")) => axios({
+    method:"put",
+    url: 'http://localhost:3001/api/v1/users/upload/'+id,
+    headers: {
+        Authorization: `Bearer ${token}`
+    },
+    data: data
+})
+
+export const updatePostImg = (id, data, token = localStorage.getItem("token")) => axios({
+    method:"put",
+    url: 'http://localhost:3001/api/v1/posts/upload/'+id,
+    headers: {
+        Authorization: `Bearer ${token}`
+    },
+    data: data
+})

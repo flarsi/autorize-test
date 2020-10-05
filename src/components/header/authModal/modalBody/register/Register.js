@@ -4,9 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
-import {UserContext} from "../../../../../context/UserContext";
+import {UserContext} from "../../../../../context/userContext/UserContext";
 import {isResponseOk} from "../../../../../helpers/middlewares";
-import {AlertContext} from "../../../../../context/AlertContext";
+import {AlertContext} from "../../../../../context/alertContext/AlertContext";
 import {bearerAuth, mailAuth, registerQuery} from "../../../../../helpers/querys";
 
 export const Register = ({handleModalClose}) => {

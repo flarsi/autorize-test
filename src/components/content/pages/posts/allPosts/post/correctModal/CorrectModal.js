@@ -6,9 +6,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from "@material-ui/core/TextField";
 import "./CorrectModal.scss"
-import {PostsContext} from "../../../../../../../context/PostsContext";
+import {PostsContext} from "../../../../../../../context/postsContext/PostsContext";
 import {isResponseOk} from "../../../../../../../helpers/middlewares";
-import {patchPostFromId} from "../../../../../../../helpers/querys";
+import {patchPostFromId, updatePostImg} from "../../../../../../../helpers/querys";
+import InsertPhotoIcon from "@material-ui/icons/InsertPhoto";
 
 export const CorrectModal = ({modal, setOpen, index}) => {
 
@@ -38,6 +39,17 @@ export const CorrectModal = ({modal, setOpen, index}) => {
                     posts.setPosts({isFetched: false})
                 })
             })
+    }
+
+    const changePostImg = (event) => {
+        const eventFile = event.target.files[0]
+        const formData = new FormData();
+        formData.append("image", eventFile, "image.png");
+        updatePostImg(post._id, formData).then((res) => {
+            isResponseOk(res.status, () =>{
+                posts.setPostById({index, data:res.data})
+            })
+        })
     }
 
 
@@ -77,13 +89,30 @@ export const CorrectModal = ({modal, setOpen, index}) => {
                         onChange={dataHandler}
                     />
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Disagree
-                    </Button>
-                    <Button onClick={handleAgree} color="primary">
-                        Agree
-                    </Button>
+                <DialogActions className="action-buttons">
+                    <div>
+                        <Button onClick={handleClose} color="primary">
+                            Disagree
+                        </Button>
+                        <Button onClick={handleAgree} color="primary">
+                            Agree
+                        </Button>
+                    </div>
+                    <div>
+                        <Button
+                            variant="contained"
+                            component="label"
+                            className={"userAvatar--change-btn"}
+                        >
+                            <input
+                                type="file"
+                                style={{ display: "none" }}
+                                accept=".jpg, .jpeg, .png"
+                                onChange={changePostImg}
+                            />
+                            <InsertPhotoIcon/>
+                        </Button>
+                    </div>
                 </DialogActions>
             </Dialog>
         </div>

@@ -1,4 +1,5 @@
 import React, {createContext, useReducer} from "react";
+import {SETPOSTBYID, SETPOSTS} from "./PostsTypes";
 
 export const PostsContext = createContext()
 
@@ -7,8 +8,10 @@ export const PostsProvider = ({children}) => {
 
     const reducer = (state, action) => {
         switch (action.type) {
-            case 'setPosts':
+            case SETPOSTS:
                 return action.payload;
+            case SETPOSTBYID:
+                return {...state[action.payload.index], ...action.payload.data}
             default:
                 throw new Error();
         }
@@ -17,12 +20,15 @@ export const PostsProvider = ({children}) => {
     const [data, dispatch] = useReducer(reducer, initialState);
 
     const setPosts = (payload) => {
-        dispatch({type: 'setPosts', payload})
+        dispatch({type: SETPOSTS, payload})
+    }
+    const setPostById = (payload) => {
+        dispatch({type: SETPOSTBYID, payload})
     }
 
     const reduceMethods = {
         setPosts,
-
+        setPostById
     }
 
     return(

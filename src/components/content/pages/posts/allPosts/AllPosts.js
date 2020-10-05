@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import "./AllPosts.scss"
-import {PostsContext} from "../../../../../context/PostsContext";
-import {UserContext} from "../../../../../context/UserContext";
+import {PostsContext} from "../../../../../context/postsContext/PostsContext";
+import {UserContext} from "../../../../../context/userContext/UserContext";
 import {Post} from "./post/Post";
 import {getAllPostsFromUserId} from "../../../../../helpers/querys";
 

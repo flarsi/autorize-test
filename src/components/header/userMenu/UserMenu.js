@@ -5,8 +5,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import {AccountCircle} from "@material-ui/icons";
 import {Link} from "react-router-dom";
-import {UserContext} from "../../../context/UserContext";
-import {AlertContext} from "../../../context/AlertContext";
+import {UserContext} from "../../../context/userContext/UserContext";
+import {AlertContext} from "../../../context/alertContext/AlertContext";
 
 export const UserMenu = () => {
 

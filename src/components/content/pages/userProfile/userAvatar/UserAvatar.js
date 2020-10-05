@@ -2,9 +2,10 @@ import React, {useContext} from "react";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
-import {UserContext} from "../../../../../context/UserContext";
+import {UserContext} from "../../../../../context/userContext/UserContext";
 import "./UserAvatar.scss"
-import axios from "axios";
+import {updateUserAvatar} from "../../../../../helpers/querys";
+import {isResponseOk} from "../../../../../helpers/middlewares";
 
 export const UserAvatar = () => {
 
@@ -12,15 +13,12 @@ export const UserAvatar = () => {
 
     const changeUserAvatar = (event) => {
         const eventFile = event.target.files[0]
-        let file = new File(['avatar'], eventFile.name, {type: eventFile.type})
-        const token = localStorage.getItem("token")
-        axios({
-            method:"put",
-            url: 'http://localhost:3001/api/v1/users/upload/'+user.data.id,
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
-            data: file
+        const formData = new FormData();
+        formData.append("avatar", eventFile, "avatar.png");
+        updateUserAvatar(user.data.id, formData).then((res) => {
+            isResponseOk(res.status, () => {
+                user.setUserData({avatar: res.data.avatar})
+            })
         })
     }
 
@@ -28,7 +26,7 @@ export const UserAvatar = () => {
         <div className={"userAvatar"}>
             {user.data.avatar ?
                 <div className={"userAvatar--img"}>
-                    <img alt={user.data.avatar}/>
+                    <img src={"http://localhost:3001"+user.data.avatar} alt={"some img"}/>
                     <Button
                         variant="contained"
                         component="label"

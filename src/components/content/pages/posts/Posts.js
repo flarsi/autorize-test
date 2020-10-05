@@ -3,8 +3,8 @@ import {Grid} from "@material-ui/core";
 import "./Posts.scss"
 import {NewPost} from "./newPosts/NewPost";
 import {Post} from "./allPosts/post/Post";
-import {PostsContext} from "../../../../context/PostsContext";
-import {UserContext} from "../../../../context/UserContext";
+import {PostsContext} from "../../../../context/postsContext/PostsContext";
+import {UserContext} from "../../../../context/userContext/UserContext";
 import {getAllPostsFromUserId} from "../../../../helpers/querys";
 
 export const Posts = () => {

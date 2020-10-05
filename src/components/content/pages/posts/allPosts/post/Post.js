@@ -9,6 +9,7 @@ import {ConfirmModal} from "./confirmModal/ConfirmModal";
 import {CorrectModal} from "./correctModal/CorrectModal";
 import {Grid} from "@material-ui/core";
 import "./Post.scss"
+import CardMedia from "@material-ui/core/CardMedia";
 
 export const Post = ({data, index}) => {
 
@@ -25,6 +26,11 @@ export const Post = ({data, index}) => {
         <Grid item xs={5} className="post">
             <Card>
                 <CardActionArea>
+                    <CardMedia
+                        image={"http://localhost:3001"+data.image}
+                        title="post img"
+                        className="card-image"
+                    >
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
                             {data.title}
@@ -36,6 +42,7 @@ export const Post = ({data, index}) => {
                             {data.description}
                         </Typography>
                     </CardContent>
+                    </CardMedia>
                 </CardActionArea>
                 <CardActions>
                     <Button size="small" color="primary" onClick={correctModalOpen}>

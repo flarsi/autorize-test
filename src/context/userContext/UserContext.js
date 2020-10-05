@@ -1,4 +1,5 @@
 import React, {createContext, useReducer} from "react";
+import {ISAUTH, LOGOUT, SETUSERDATA, STAYINSYSTEM} from "./UserTypes";
 
 export const UserContext = createContext()
 
@@ -10,13 +11,13 @@ export const UserProvider = ({children}) => {
 
     const reducer = (state, action) => {
         switch (action.type) {
-            case 'setUserData':
+            case SETUSERDATA:
                 return {...state, ...action.payload};
-            case 'stayInSystem':
+            case STAYINSYSTEM:
                 return {...state, stayInSystem: !state.stayInSystem};
-            case 'isAuth':
+            case ISAUTH:
                 return {...state, isAuth: !state.isAuth};
-            case 'logOut':
+            case LOGOUT:
                 return initialState;
             default:
                 throw new Error();
@@ -26,18 +27,18 @@ export const UserProvider = ({children}) => {
     const [data, dispatch] = useReducer(reducer, initialState);
 
     const setUserData = (payload) => {
-        dispatch({type: 'setUserData', payload})
+        dispatch({type: SETUSERDATA, payload})
     }
 
     const changeStayInSystem = () => {
-        dispatch({type: 'stayInSystem'})
+        dispatch({type: STAYINSYSTEM})
     }
     const isAuth = () => {
-        dispatch({type: 'isAuth'})
+        dispatch({type: ISAUTH})
     }
 
     const logOut = () => {
-        dispatch({type: 'logOut'})
+        dispatch({type: LOGOUT})
         localStorage.clear()
     }
 

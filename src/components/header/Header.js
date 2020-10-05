@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {AuthModal} from "./authModal/AuthModal";
-import {UserContext} from "../../context/UserContext";
+import {UserContext} from "../../context/userContext/UserContext";
 import {UserMenu} from "./userMenu/UserMenu";
 import {NavDrawer} from "./drawer/Drawer";
 import { useLocation } from 'react-router-dom'

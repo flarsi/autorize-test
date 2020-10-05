@@ -1,4 +1,5 @@
 import React, {createContext, useReducer} from "react";
+import {CLOSEALERT, SHOWALERT} from "./AlertTypes";
 
 export const AlertContext = createContext()
 
@@ -6,9 +7,9 @@ export const AlertProvider = ({children}) => {
 
     const reducer = (state, action) => {
         switch (action.type) {
-            case 'showAlert':
+            case SHOWALERT:
                 return {show: true, text: action.payload};
-            case 'closeAlert':
+            case CLOSEALERT:
                 return {show: false};
             default:
                 throw new Error();
@@ -23,17 +24,17 @@ export const AlertProvider = ({children}) => {
     const [data, dispatch] = useReducer(reducer, initialState);
 
     const showAlert = (payload = "some alert") => {
-        dispatch({type: 'showAlert', payload})
+        dispatch({type: SHOWALERT, payload})
     }
 
     const closeAlert = () => {
-        dispatch({type: 'closeAlert'})
+        dispatch({type: CLOSEALERT})
     }
 
     const timeOutShow =   (time = 5000, text) => {
         showAlert(text)
         setTimeout(async () => {
-             await dispatch({type: 'closeAlert'})
+             await dispatch({type: CLOSEALERT})
         }, time)
     }
 
