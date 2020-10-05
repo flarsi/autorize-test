@@ -7,6 +7,7 @@ import {createNewPostQuery} from "../../../../../helpers/querys";
 import {AlertContext} from "../../../../../context/AlertContext";
 import {isResponseOk} from "../../../../../helpers/middlewares";
 import {PostsContext} from "../../../../../context/PostsContext";
+import Grid from "@material-ui/core/Grid";
 
 export const NewPost = () => {
 
@@ -20,26 +21,36 @@ export const NewPost = () => {
     }
 
     const createNewPost = () => {
-        if(post.fullText.length > 20){
-            createNewPostQuery(post).then((res) => {
-                isResponseOk(res.status, () => {
-                    posts.setPosts({isFetched: false})
-                })
-            })
-        }else {
-            alert.timeOutShow(4000,"Full text min 20 chars")
+        if(post.title && post.fullText){
+            if(post.fullText.length > 20){
+                if(!posts.data.posts.some(el => el.title === post.title)){
+                    createNewPostQuery(post).then((res) => {
+                        isResponseOk(res.status, () => {
+                            posts.setPosts({isFetched: false})
+                        })
+                    })
+                }else {
+                    alert.timeOutShow(4000,"Post with this name already is created")
+                }
+            }else {
+                alert.timeOutShow(4000,"Full text min 20 chars")
+            }
+        }else{
+            alert.timeOutShow(4000,"Type some in areas")
         }
     }
 
     return(
-        <div className="new-post">
-            <TextField id="title" label="Title" onChange={postDataHandle}/>
-            <TextArea rows={5} id="fullText" placeholder="Full text (min 20 chars)" onChange={postDataHandle}/>
-            <TextArea rows={5} id="description" placeholder="Description" onChange={postDataHandle}/>
+        <Grid item xs={6}>
+            <div className="new-post">
+                <TextField id="title" label="Title" onChange={postDataHandle}/>
+                <TextArea rows={5} id="fullText" placeholder="Full text (min 20 chars)" onChange={postDataHandle}/>
+                <TextArea rows={5} id="description" placeholder="Description" onChange={postDataHandle}/>
 
-            <Button variant="contained" color="primary"  onClick={createNewPost}>
-                Create new post
-            </Button>
-        </div>
+                <Button variant="contained" color="primary"  onClick={createNewPost}>
+                    Create new post
+                </Button>
+            </div>
+        </Grid>
     )
 }

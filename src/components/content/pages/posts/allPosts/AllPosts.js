@@ -18,7 +18,7 @@ export const AllPosts = () => {
 
     return(
         <div className="all-posts">
-            {posts.data.posts && posts.data.posts.map((elem, index) => (<Post key={index} index={index} data={elem}/>))}
+
         </div>
     )
 }

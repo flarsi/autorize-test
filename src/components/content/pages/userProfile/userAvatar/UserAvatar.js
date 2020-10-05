@@ -9,14 +9,10 @@ import axios from "axios";
 export const UserAvatar = () => {
 
     const user = useContext(UserContext)
-    console.log(user.data)
-
 
     const changeUserAvatar = (event) => {
         const eventFile = event.target.files[0]
         let file = new File(['avatar'], eventFile.name, {type: eventFile.type})
-        // setAvatar(event.target.files[0])
-        console.log(file)
         const token = localStorage.getItem("token")
         axios({
             method:"put",
