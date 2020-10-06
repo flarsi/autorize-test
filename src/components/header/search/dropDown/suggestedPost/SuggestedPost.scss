@@ -1,0 +1,18 @@
+.suggested-post{
+  &>*{
+    display: flex;
+    width: 100%;
+
+    &>span{
+      justify-content: flex-start;
+    }
+  }
+
+  &:nth-child(-n+2){
+    border-bottom: 1px solid rgba(0, 0, 0, 0.54);
+  }
+
+  &:hover{
+    color: black !important;
+  }
+}

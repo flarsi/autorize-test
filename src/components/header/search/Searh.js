@@ -1,16 +1,21 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
+import {DropDown} from "./dropDown/DropDown";
 
 export const Search = ({classes}) => {
 
-    const [search, setSearch] = useState()
+    const [search, setSearch] = useState({text: '', open: false})
 
     const handleSearchText = (event) => {
-        setSearch(event.target.value)
+        setSearch({text: event.target.value, open: true})
     }
 
-    console.log(search)
+    useEffect(() => {
+        if(search.text === "" && search.open){
+            setSearch({...search, open: false})
+        }
+    }, [search])
 
     return(
         <div className={classes.search}>
@@ -26,6 +31,7 @@ export const Search = ({classes}) => {
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={handleSearchText}
             />
+            <DropDown search={search} setSearch={setSearch}/>
         </div>
     )
 }
