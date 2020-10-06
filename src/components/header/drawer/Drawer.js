@@ -1,5 +1,4 @@
-import React from "react";
-import Drawer from "@material-ui/core/Drawer";
+import React, {useEffect} from "react";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -13,24 +12,43 @@ import ListItemText from "@material-ui/core/ListItemText";
 import useTheme from "@material-ui/core/styles/useTheme";
 import { useHistory } from "react-router-dom";
 import "./Drawer.scss"
+import Drawer from "@material-ui/core/Drawer";
 
-export const NavDrawer = ({open, handleDrawerClose}) => {
+export const NavDrawer = ({open, setOpen}) => {
     const theme = useTheme();
     const history = useHistory();
 
     const goToHome = () => {
         history.push("/");
+        setOpen(false);
     }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    useEffect(() => {
+        window.addEventListener("click", (event) => {
+            const isClickInside =
+                document.getElementById('drawer').contains(event.target)
+                || document.getElementById('nav-btn--open').contains(event.target);
+
+            if (!isClickInside) {
+                setOpen(false);
+            }
+        })
+    })
+
 
     return(
         <Drawer
             variant="persistent"
             anchor="left"
             open={open}
-            className={"drawer"}
+            id="drawer"
         >
             <div>
-                <IconButton onClick={handleDrawerClose}>
+                <IconButton onClick={handleClose}>
                     {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                 </IconButton>
             </div>
@@ -41,7 +59,7 @@ export const NavDrawer = ({open, handleDrawerClose}) => {
                     <ListItemText primary={"Home"} />
                 </ListItem>
                 {['Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
+                    <ListItem disabled={true} button key={text} onClick={handleClose}>
                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                         <ListItemText primary={text} />
                     </ListItem>
@@ -50,7 +68,7 @@ export const NavDrawer = ({open, handleDrawerClose}) => {
             <Divider />
             <List>
                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
+                    <ListItem disabled={true} button key={text} onClick={handleClose}>
                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                         <ListItemText primary={text} />
                     </ListItem>

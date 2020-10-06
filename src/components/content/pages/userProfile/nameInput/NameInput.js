@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./NameInput.scss"
 import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,7 +15,13 @@ export const NameInput = () => {
 
     const user = useContext(UserContext)
 
-    const [name, setName] = useState({correct: false, text: user.data.name})
+    const [name, setName] = useState({correct: false, text: ''})
+
+    useEffect(() => {
+        if(user.data){
+            setName({correct: false, text: user.data.name})
+        }
+    },[user])
 
     const theme = createMuiTheme({
         palette: {
@@ -36,7 +42,6 @@ export const NameInput = () => {
         setName({...name, text: user.data.name, correct: !name.correct})
     }
 
-
     const [dialog, setDialog] = React.useState({open: false});
 
     const handleOpen = () => {
@@ -45,8 +50,9 @@ export const NameInput = () => {
 
     return (
         <div className={"name-input"}>
+            {name.text &&
             <Input onChange={changeName} value={name.text} disabled={!name.correct} inputProps={{ 'aria-label': 'description' }} />
-
+            }
             {name.correct ?
                 <div>
                     <ThemeProvider theme={theme}>

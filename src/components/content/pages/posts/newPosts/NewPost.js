@@ -8,10 +8,12 @@ import {AlertContext} from "../../../../../context/alertContext/AlertContext";
 import {isResponseOk} from "../../../../../helpers/middlewares";
 import {PostsContext} from "../../../../../context/postsContext/PostsContext";
 import Grid from "@material-ui/core/Grid";
+import {UserContext} from "../../../../../context/userContext/UserContext";
 
 export const NewPost = () => {
 
     const posts = useContext(PostsContext)
+    const user = useContext(UserContext)
     const alert = useContext(AlertContext)
 
     const [post, setPost] = useState({title: '', fullText: '', description: ''})
@@ -24,7 +26,7 @@ export const NewPost = () => {
         if(post.title && post.fullText){
             if(post.fullText.length > 20){
                 if(!posts.data.posts.some(el => el.title === post.title)){
-                    createNewPostQuery(post).then((res) => {
+                    createNewPostQuery(post, user.data.token, user.data.isAuth).then((res) => {
                         isResponseOk(res.status, () => {
                             posts.setPosts({isFetched: false})
                         })
@@ -41,7 +43,7 @@ export const NewPost = () => {
     }
 
     return(
-        <Grid item xs={6}>
+        <Grid item lg={6}  md={6} sm={12} xl={12} xs={12}>
             <div className="new-post">
                 <TextField id="title" label="Title" onChange={postDataHandle}/>
                 <TextArea rows={5} id="fullText" placeholder="Full text (min 20 chars)" onChange={postDataHandle}/>

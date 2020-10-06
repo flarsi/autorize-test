@@ -1,5 +1,17 @@
 .header{
 
+  .toolbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .nav{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
   .login{
     padding: 6px 16px ;
   }

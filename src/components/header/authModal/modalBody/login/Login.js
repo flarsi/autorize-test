@@ -18,7 +18,6 @@ export const Login = ({handleModalClose}) => {
         mailAuth(user).then(res => {
             isResponseOk(res.status, () => {
                 user.setUserData({token: res.data.token})
-                user.isAuth()
                 alert.timeOutShow(2000, "Log in success")
                 bearerAuth(res.data.token).then((res) => {
                     isResponseOk(res.status, () => {

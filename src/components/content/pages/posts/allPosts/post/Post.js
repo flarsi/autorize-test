@@ -23,7 +23,7 @@ export const Post = ({data, index}) => {
     }
 
     return(
-        <Grid item xs={5} className="post">
+        <Grid item lg={4}  md={4} sm={6} xl={6} xs={12} className="allPost-post">
             <Card>
                 <CardActionArea>
                     <CardMedia

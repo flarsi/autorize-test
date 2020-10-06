@@ -3,23 +3,29 @@ import {Route, Switch} from "react-router-dom";
 import {Home} from "./home/Home";
 import {UserProfile} from "./userProfile/UserProfile";
 import {Posts} from "./posts/Posts";
+import {Post} from "./post/Post";
 
 export const Pages = () => {
     const pages = [
         {
             name: 'Home',
             link: '/',
-            component: () => (<Home/>)
+            component: Home
         },
         {
             name: 'UserProfile',
             link: '/profile',
-            component: () => (<UserProfile/>)
+            component: UserProfile
         },
         {
             name: 'UserPosts',
             link: '/posts',
-            component: () => (<Posts/>)
+            component: Posts
+        },
+        {
+            name: 'PostPAge',
+            link: '/post/:postId',
+            component: Post
         }
     ]
 

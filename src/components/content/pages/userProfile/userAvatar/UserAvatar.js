@@ -15,7 +15,7 @@ export const UserAvatar = () => {
         const eventFile = event.target.files[0]
         const formData = new FormData();
         formData.append("avatar", eventFile, "avatar.png");
-        updateUserAvatar(user.data.id, formData).then((res) => {
+        updateUserAvatar(user.data.id, formData, user.data.token, user.data.isAuth).then((res) => {
             isResponseOk(res.status, () => {
                 user.setUserData({avatar: res.data.avatar})
             })

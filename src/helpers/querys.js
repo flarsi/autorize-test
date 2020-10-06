@@ -30,6 +30,11 @@ export const registerQuery = (user) =>  axios({
     }
 })
 
+export const getUserById = (id) =>  axios({
+    method:"get",
+    url: 'http://localhost:3001/api/v1/users/' + id,
+})
+
 export const createNewPostQuery = (data, token = localStorage.getItem("token")) => {
     return axios({
         method:"post",
@@ -48,6 +53,19 @@ export const getAllPostsFromUserId = (id) =>{
     })
 }
 
+export const getAllPosts = (token = localStorage.getItem("token")) => axios({
+    method:"get",
+    url: 'http://localhost:3001/api/v1/posts',
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+export const getPostById = (id) => axios({
+    method:"get",
+    url: 'http://localhost:3001/api/v1/posts/' + id,
+})
+
 export const deletePostFromId = (id, token = localStorage.getItem("token")) =>{
     return axios({
         method:"delete",
@@ -57,6 +75,19 @@ export const deletePostFromId = (id, token = localStorage.getItem("token")) =>{
         },
     })
 }
+
+export const patchUserById = (id, name, token = localStorage.getItem("token")) => axios({
+    method: "patch",
+    url: 'http://localhost:3001/api/v1/users/' + id,
+    headers: {
+        Authorization: `Bearer ${token}`,
+
+    },
+    data: {
+        name: name
+    }
+})
+
 export const patchPostFromId = (id, data, token = localStorage.getItem("token")) =>{
     return axios({
         method:"patch",

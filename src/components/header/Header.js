@@ -11,6 +11,8 @@ import {UserContext} from "../../context/userContext/UserContext";
 import {UserMenu} from "./userMenu/UserMenu";
 import {NavDrawer} from "./drawer/Drawer";
 import { useLocation } from 'react-router-dom'
+import {fade} from "@material-ui/core";
+import {Search} from "./search/Searh";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,14 +24,50 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(3),
+            width: 'auto',
+        },
+    },
+    searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    inputRoot: {
+        color: 'inherit',
+    },
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '20rem',
+        },
+    },
 }));
 
 export const Header = () => {
     const classes = useStyles();
     const user = useContext(UserContext)
-    const location = useLocation().pathname.replace('/', '').toUpperCase();
 
-    console.log();
+    let location = useLocation().pathname;
+    location = location.slice(0, location.lastIndexOf('/')).replace("/", '')
 
     const [open, setOpen] = React.useState(false);
 
@@ -37,21 +75,22 @@ export const Header = () => {
         setOpen(true);
     };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
     return(
         <div className="header">
             <div className={classes.root}>
                 <AppBar position="static">
-                    <Toolbar>
-                        <IconButton onClick={handleDrawerOpen} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h6" className={classes.title}>
-                            {location === '' ? "Home" : location}
-                        </Typography>
+                    <Toolbar className="toolbar">
+                        <div className={"nav"}>
+                            <IconButton id={"nav-btn--open"} onClick={handleDrawerOpen} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                                <MenuIcon />
+                            </IconButton>
+                            <Typography variant="h6" className={classes.title}>
+                                {location === '' ? "Home" : location}
+                            </Typography>
+                        </div>
+
+                        <Search classes={classes}/>
+
                         {user.data.isAuth ?
                             <UserMenu/>
                             :
@@ -59,7 +98,7 @@ export const Header = () => {
                         }
                     </Toolbar>
                 </AppBar>
-                <NavDrawer open={open} handleDrawerClose={handleDrawerClose}/>
+                <NavDrawer open={open} setOpen={setOpen}/>
             </div>
         </div>
     )

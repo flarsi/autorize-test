@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import "./AllPosts.scss"
 import {PostsContext} from "../../../../../context/postsContext/PostsContext";
 import {UserContext} from "../../../../../context/userContext/UserContext";
@@ -10,15 +10,13 @@ export const AllPosts = () => {
     const posts = useContext(PostsContext)
     const user = useContext(UserContext)
 
-    if(user.data.id && !posts.data.isFetched)
-        getAllPostsFromUserId(user.data.id)
-            .then((res) => {
-                posts.setPosts({posts:res.data, isFetched: true})
-            })
+    useEffect(() => {
+        if(user.data.id && !posts.data.isFetched)
+            getAllPostsFromUserId(user.data.id)
+                .then((res) => {
+                    posts.setPosts({posts:res.data, isFetched: true})
+                })
+    })
 
-    return(
-        <div className="all-posts">
-
-        </div>
-    )
+    return () => posts.data.posts && posts.data.posts.map((elem, index) => (<Post key={index} index={index} data={elem}/>))
 }

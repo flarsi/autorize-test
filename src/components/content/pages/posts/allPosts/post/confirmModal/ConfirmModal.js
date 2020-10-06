@@ -8,10 +8,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {PostsContext} from "../../../../../../../context/postsContext/PostsContext";
 import {deletePostFromId} from "../../../../../../../helpers/querys";
 import {isResponseOk} from "../../../../../../../helpers/middlewares";
+import {UserContext} from "../../../../../../../context/userContext/UserContext";
 
 export const ConfirmModal = ({modal, setOpen, index}) => {
 
     const posts = useContext(PostsContext)
+    const user = useContext(UserContext)
 
     const handleClose = () => {
         setOpen({...modal, confirm: false});
@@ -19,7 +21,7 @@ export const ConfirmModal = ({modal, setOpen, index}) => {
 
     const handleAgree = () => {
         setOpen({...modal, confirm: false});
-        deletePostFromId(posts.data.posts[index]._id).then((res) => {
+        deletePostFromId(posts.data.posts[index]._id, user.data.token, user.data.isAuth).then((res) => {
             isResponseOk(res.status, () => {
                 posts.setPosts({isFetched: false})
             })

@@ -10,10 +10,12 @@ import {PostsContext} from "../../../../../../../context/postsContext/PostsConte
 import {isResponseOk} from "../../../../../../../helpers/middlewares";
 import {patchPostFromId, updatePostImg} from "../../../../../../../helpers/querys";
 import InsertPhotoIcon from "@material-ui/icons/InsertPhoto";
+import {UserContext} from "../../../../../../../context/userContext/UserContext";
 
 export const CorrectModal = ({modal, setOpen, index}) => {
 
     const posts = useContext(PostsContext)
+    const user = useContext(UserContext)
     const post = posts.data.posts[index]
 
     const [postData, setData] = useState({
@@ -32,7 +34,7 @@ export const CorrectModal = ({modal, setOpen, index}) => {
 
     const handleAgree = () => {
 
-        patchPostFromId(posts.data.posts[index]._id, postData)
+        patchPostFromId(posts.data.posts[index]._id, postData, user.data.token, user.data.isAuth)
             .then(res => {
                 isResponseOk(res.status, () => {
                     setOpen({...modal, confirm: false});
@@ -45,7 +47,7 @@ export const CorrectModal = ({modal, setOpen, index}) => {
         const eventFile = event.target.files[0]
         const formData = new FormData();
         formData.append("image", eventFile, "image.png");
-        updatePostImg(post._id, formData).then((res) => {
+        updatePostImg(post._id, formData, user.data.token, user.data.isAuth).then((res) => {
             isResponseOk(res.status, () =>{
                 posts.setPostById({index, data:res.data})
             })

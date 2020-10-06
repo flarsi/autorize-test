@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {Grid} from "@material-ui/core";
 import "./Posts.scss"
 import {NewPost} from "./newPosts/NewPost";
@@ -12,19 +12,27 @@ export const Posts = () => {
     const posts = useContext(PostsContext)
     const user = useContext(UserContext)
 
-    if(user.data.id && !posts.data.isFetched)
-        getAllPostsFromUserId(user.data.id)
-            .then((res) => {
-                posts.setPosts({posts:res.data, isFetched: true})
-            })
+    useEffect(() => {
+        if(user.data.id && !posts.data.isFetched)
+            getAllPostsFromUserId(user.data.id)
+                .then((res) => {
+                    posts.setPosts({
+                        posts: res.data, isFetched: true
+                    })
+                })
+    }, [posts, user])
+
 
     return(
         <div className="posts">
-            <Grid container direction={"row"} justify={"space-around"} className="userProfile">
+            <Grid container direction={"row"} justify={"space-around"} spacing={2} className="userProfile">
                 <Grid item container xs={12} justify={"center"}>
                     <NewPost/>
                 </Grid>
-                {posts.data.posts && posts.data.posts.map((elem, index) => (<Post key={index} index={index} data={elem}/>))}
+                {posts.data.posts &&
+                    posts.data.posts.map((elem, index) => (
+                        <Post key={index} index={index} data={elem}/>
+                    ))}
             </Grid>
         </div>
     )

@@ -18,8 +18,7 @@ export const Register = ({handleModalClose}) => {
         mailAuth(user).then(res => {
             isResponseOk(res.status, () => {
                 user.setUserData({token: res.data.token})
-                user.isAuth()
-                bearerAuth().then((res) => {
+                bearerAuth(res.data.token).then((res) => {
                     isResponseOk(res.status, () => {
                         if(!user.data.isAuth){
                             user.isAuth()
@@ -55,8 +54,8 @@ export const Register = ({handleModalClose}) => {
 
     return(
         <div className="register">
-            <TextField id="standard-basic" label="Name" name="name" onChange={userDataHandler}/>
-            <TextField id="standard-basic" label="Email" name="email" onChange={userDataHandler}/>
+            <TextField label="Name" name="name" onChange={userDataHandler}/>
+            <TextField label="Email" name="email" onChange={userDataHandler}/>
             <TextField
                 label="Password"
                 type="password"
