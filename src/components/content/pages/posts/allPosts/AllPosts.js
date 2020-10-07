@@ -11,12 +11,13 @@ export const AllPosts = () => {
     const user = useContext(UserContext)
 
     useEffect(() => {
-        if(user.data.id && !posts.data.isFetched)
+        if(user.data.id && posts.data.isFetched !== 'user')
             getAllPostsFromUserId(user.data.id)
                 .then((res) => {
-                    posts.setPosts({posts:res.data, isFetched: true})
+                    posts.setPosts({posts:res.data, isFetched: 'user'})
                 })
-    })
+    }, [user, posts])
+
 
     return () => posts.data.posts && posts.data.posts.map((elem, index) => (<Post key={index} index={index} data={elem}/>))
 }

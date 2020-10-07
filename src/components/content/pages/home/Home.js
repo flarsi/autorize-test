@@ -12,11 +12,14 @@ export const Home = () => {
     const posts = useContext(PostsContext)
 
     useEffect(() => {
-        if(!posts.data.isFetched) {
+        if(posts.data.isFetched !== 'global') {
             getAllPosts(user.data.token, user.data.isAuth)
             .then((res) => {
                 isResponseOk(res.status, () => {
-                    posts.setPosts({posts: res.data, isFetched: true})
+                    posts.setPosts({
+                            posts: res.data,
+                            isFetched: 'global'
+                        })
                 })
             })
         }

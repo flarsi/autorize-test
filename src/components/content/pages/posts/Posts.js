@@ -13,12 +13,13 @@ export const Posts = () => {
     const user = useContext(UserContext)
 
     useEffect(() => {
-        if(user.data.id && !posts.data.isFetched)
+        if(user.data.id && posts.data.isFetched !== 'user')
             getAllPostsFromUserId(user.data.id)
                 .then((res) => {
                     posts.setPosts({
-                        posts: res.data, isFetched: true
+                        posts: res.data, isFetched: 'user'
                     })
+                    console.log("test")
                 })
     }, [posts, user])
 

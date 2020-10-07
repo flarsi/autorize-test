@@ -12,7 +12,6 @@ function App() {
 
     useEffect(() => {
         if(localStorage.getItem("token") && !user.data.name) {
-            console.log(user.data.token, user.data.isAuth)
             bearerAuth(user.data.token && user.data.token).then((res) => {
                 isResponseOk(res.status, () => {
                     if (!user.data.isAuth) {

@@ -4,7 +4,7 @@ import {SETPOSTBYID, SETPOSTS} from "./PostsTypes";
 export const PostsContext = createContext()
 
 export const PostsProvider = ({children}) => {
-    const initialState = []
+    const initialState = {}
 
     const reducer = (state, action) => {
         switch (action.type) {

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useRef} from "react";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -13,6 +13,9 @@ import useTheme from "@material-ui/core/styles/useTheme";
 import { useHistory } from "react-router-dom";
 import "./Drawer.scss"
 import Drawer from "@material-ui/core/Drawer";
+import {useOutsideClick} from "../../../helpers/middlewares";
+
+
 
 export const NavDrawer = ({open, setOpen}) => {
     const theme = useTheme();
@@ -27,18 +30,11 @@ export const NavDrawer = ({open, setOpen}) => {
         setOpen(false);
     };
 
-    useEffect(() => {
-        window.addEventListener("click", (event) => {
-            const isClickInside =
-                document.getElementById('drawer').contains(event.target)
-                || document.getElementById('nav-btn--open').contains(event.target);
+    const drawerRef = useRef(null)
 
-            if (!isClickInside) {
-                setOpen(false);
-            }
-        })
+    useOutsideClick(drawerRef, () => {
+        setOpen(false)
     })
-
 
     return(
         <Drawer
@@ -46,6 +42,7 @@ export const NavDrawer = ({open, setOpen}) => {
             anchor="left"
             open={open}
             id="drawer"
+            ref={drawerRef}
         >
             <div>
                 <IconButton onClick={handleClose}>

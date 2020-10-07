@@ -1,7 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import "./DropDown.scss"
 import {PostsContext} from "../../../../context/postsContext/PostsContext";
 import {SuggestedPost} from "./suggestedPost/SuggestedPost";
+import {useOutsideClick} from "../../../../helpers/middlewares";
 
 export const DropDown = ({search, setSearch}) => {
 
@@ -19,24 +20,21 @@ export const DropDown = ({search, setSearch}) => {
         })
         setSuggestedPosts(elems)
     }
-    }, [setSearch, search, posts])
+    }, [search, posts])
 
-    useEffect(() => {
-        window.addEventListener("click", (event) => {
-            const isClickInside =
-                document.getElementsByClassName('drop-down-search-menu')[0].contains(event.target)
-                || document.getElementsByClassName('makeStyles-search-4')[0].contains(event.target);
+    const dropDownRef = useRef(null)
 
-            if (!isClickInside) {
-                setSearch({...search, open: false});
-            }else if(isClickInside){
-                setSearch({...search, open: true});
-            }
-        })
-    }, [setSearch, search])
+    useOutsideClick(dropDownRef,
+        () => {
+            setSearch({...search, open: false});
+        },
+        () => {
+            setSearch({...search, open: true});
+        }
+        )
 
     return (
-        <div className="drop-down-search-menu">
+        <div className="drop-down-search-menu" ref={dropDownRef}>
             {suggestedPosts && (search.text !== "" &&  search.open)&& suggestedPosts.map((elem, index) => {
                 return(<SuggestedPost data={elem} key={index}/>)
             })}

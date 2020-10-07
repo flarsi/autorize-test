@@ -29,6 +29,7 @@ export const Pages = () => {
         }
     ]
 
+
     return(
         <Switch>
             {pages.map((element) => (
