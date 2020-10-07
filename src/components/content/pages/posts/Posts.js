@@ -19,7 +19,6 @@ export const Posts = () => {
                     posts.setPosts({
                         posts: res.data, isFetched: 'user'
                     })
-                    console.log("test")
                 })
     }, [posts, user])
 
